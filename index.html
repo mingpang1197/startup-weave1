@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Weave — 맞춤형 창업·공모전 큐레이션</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 상단 내비게이션 -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#" class="logo">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>Startup Weave</span>
+      </a>
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-tab active" data-tab="support"><i class="fa-solid fa-hand-holding-dollar"></i> 지원사업</button>
+        <button class="nav-tab" data-tab="invest"><i class="fa-solid fa-chart-line"></i> 투자유치</button>
+        <button class="nav-tab" data-tab="demoday"><i class="fa-solid fa-rocket"></i> 데모데이</button>
+        <button class="nav-tab" data-tab="register"><i class="fa-solid fa-pen-to-square"></i> 공모전 등록</button>
+      </nav>
+      <button id="themeToggle" class="theme-toggle" aria-label="다크모드 전환">
+        <i class="fa-solid fa-sun"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- 좌측 사이드바 -->
+    <aside class="sidebar">
+      <div class="card profile-card">
+        <div class="card-header">
+          <i class="fa-solid fa-user-circle"></i>
+          <h2>로그인 &amp; 프로필 설정</h2>
+        </div>
+        <form id="profileForm" class="profile-form">
+          <div class="form-group">
+            <label for="userName"><i class="fa-solid fa-id-card"></i> 이름</label>
+            <input type="text" id="userName" placeholder="홍길동" value="김창업">
+          </div>
+          <div class="form-group">
+            <label for="userAge"><i class="fa-solid fa-cake-candles"></i> 나이</label>
+            <select id="userAge">
+              <option value="20-24">20–24세</option>
+              <option value="25-29" selected>25–29세</option>
+              <option value="30-34">30–34세</option>
+              <option value="35+">35세 이상</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="userEducation"><i class="fa-solid fa-graduation-cap"></i> 학력</label>
+            <select id="userEducation">
+              <option value="bachelor" selected>학사</option>
+              <option value="master">석사</option>
+              <option value="phd">박사</option>
+              <option value="other">기타</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="startupStage"><i class="fa-solid fa-seedling"></i> 창업 단계</label>
+            <select id="startupStage">
+              <option value="idea">아이디어 단계</option>
+              <option value="pre" selected>예비창업</option>
+              <option value="early">초기창업 (3년 미만)</option>
+              <option value="growth">성장기 (3년 이상)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="userRegion"><i class="fa-solid fa-location-dot"></i> 희망 지역</label>
+            <select id="userRegion">
+              <option value="seoul" selected>서울</option>
+              <option value="gyeonggi">경기</option>
+              <option value="busan">부산</option>
+              <option value="nationwide">전국</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="userInterests"><i class="fa-solid fa-tags"></i> 관심 분야</label>
+            <select id="userInterests" multiple size="4">
+              <option value="ai" selected>AI · 딥러닝</option>
+              <option value="fintech">핀테크</option>
+              <option value="health">헬스케어</option>
+              <option value="content" selected>콘텐츠 · 미디어</option>
+              <option value="green">그린 · ESG</option>
+              <option value="bio">바이오</option>
+            </select>
+            <span class="form-hint">Ctrl+클릭으로 복수 선택</span>
+          </div>
+          <button type="submit" class="btn-primary btn-save">
+            <i class="fa-solid fa-floppy-disk"></i> 프로필 저장
+          </button>
+        </form>
+        <div id="profileToast" class="toast" hidden>
+          <i class="fa-solid fa-circle-check"></i>
+          <span>프로필이 저장되었습니다. 맞춤 추천을 업데이트했어요!</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 메인 추천 영역 -->
+    <main class="main-content">
+      <!-- 핫 공고 배너 -->
+      <section class="hot-banner-section">
+        <div class="section-label">
+          <i class="fa-solid fa-fire"></i>
+          <span>금주의 실시간 핫 공고</span>
+        </div>
+        <div class="hot-banner">
+          <div class="hot-banner-track" id="hotBannerTrack">
+            <div class="hot-slide active">
+              <div class="hot-badge">🔥 실시간 HOT</div>
+              <h3>2026 AI 영상 광고 숏폼 공모전</h3>
+              <p>총 상금 5,000만원 · 서울시 · D-3 마감</p>
+              <span class="hot-tag">AI · 콘텐츠</span>
+            </div>
+            <div class="hot-slide">
+              <div class="hot-badge">⚡ 긴급</div>
+              <h3>K-스타트업 IR 데모데이 2026</h3>
+              <p>투자 연결 50+ VC · 판교 · D-7</p>
+              <span class="hot-tag">투자유치</span>
+            </div>
+            <div class="hot-slide">
+              <div class="hot-badge">🌱 신규</div>
+              <h3>예비창업패키지 2차 모집</h3>
+              <p>최대 1억 원 지원 · 전국 · D-12</p>
+              <span class="hot-tag">지원사업</span>
+            </div>
+          </div>
+          <div class="hot-dots" id="hotDots"></div>
+        </div>
+      </section>
+
+      <!-- 맞춤 추천 -->
+      <section class="recommend-section">
+        <div class="section-header">
+          <div class="section-label">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>내 프로필 맞춤 추천 공고</span>
+          </div>
+          <span id="matchCount" class="match-count">6건 매칭</span>
+        </div>
+        <div id="recommendGrid" class="recommend-grid">
+          <!-- script.js에서 렌더링 -->
+        </div>
+      </section>
+
+      <!-- PDF 등록 -->
+      <section class="upload-section">
+        <div class="card upload-card" id="uploadCard">
+          <div class="upload-icon">
+            <i class="fa-solid fa-file-pdf"></i>
+          </div>
+          <h3>PDF 공고문 간편 등록</h3>
+          <p>공고 PDF를 이곳에 드래그하거나 클릭하여 업로드하세요</p>
+          <span class="upload-hint">지원 형식: PDF (최대 20MB) · AI가 자동으로 항목을 추출합니다</span>
+          <input type="file" id="fileInput" accept=".pdf" hidden>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- AI 비서 플로팅 -->
+  <div class="ai-assistant">
+    <button id="aiToggle" class="ai-fab" aria-label="AI 비서 열기">
+      <i class="fa-solid fa-comment-dots"></i>
+    </button>
+    <div id="aiChat" class="ai-chat" hidden>
+      <div class="ai-chat-header">
+        <div class="ai-avatar">
+          <i class="fa-solid fa-robot"></i>
+        </div>
+        <div>
+          <strong>Upstage Solar 비서</strong>
+          <span class="ai-status">온라인</span>
+        </div>
+        <button id="aiClose" class="ai-close" aria-label="닫기">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="ai-chat-body" id="aiChatBody">
+        <div class="ai-message bot">
+          <p>안녕하세요! Startup Weave AI 비서입니다. 🌟<br>지원사업 매칭, 서류 작성, 마감일 알림 등 무엇이든 물어보세요.</p>
+        </div>
+      </div>
+      <div class="ai-chat-input">
+        <input type="text" id="aiInput" placeholder="메시지를 입력하세요...">
+        <button id="aiSend" aria-label="전송">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
